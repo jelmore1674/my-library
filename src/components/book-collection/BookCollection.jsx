@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import BookCard from '../book-card/BookCard';
 
-export default function BookCollection({ openModal }) {
+export default function BookCollection() {
 	const myLibrary = [
 		{
 			id: 1,
@@ -102,7 +102,6 @@ export default function BookCollection({ openModal }) {
 				pages={book.pages}
 				finished={book.finished}
 				className='col'
-				openModal={openModal}
 				removeBook={removeBook}
 				updateBook={updateBook}
 			/>

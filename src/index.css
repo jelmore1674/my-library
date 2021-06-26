@@ -14,12 +14,21 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.bg-primary {
+.card {
+    background-color: rgba(255, 255, 255, 0) !important;
+    color: white;
+}
+
+.text-white {
+    font-weight: normal;
+}
+
+.bg-primary-trans {
     background: none;
     /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #f56117, #0b486b);
+    background: -webkit-linear-gradient(to bottom, #f5611788, #0b486b88);
     /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom, #f56117, #0b486b);
+    background: linear-gradient(to bottom, #f5611788, #0b486b88);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 

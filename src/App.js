@@ -5,35 +5,44 @@ import BookCollection from './components/book-collection/BookCollection';
 import Form from './components/form/form';
 
 function App() {
-	const [showModal, setShowModal] = useState('');
+	let defaultModal = {
+		display: 'none',
+	};
+
+	let modalStyle = {
+		display: 'block',
+		backgroundColor: 'rgba(0, 0, 0, .8)',
+	};
+
+	const [showModal, setShowModal] = useState(defaultModal);
 	const [show, setShow] = useState('');
 
 	function openForm() {
 		console.log('clicked');
-		setShowModal('block');
+		setShowModal(modalStyle);
 		setShow('show');
 	}
 
 	function handleSubmit(event) {
 		event.preventDefault();
 		setShow('');
-		setShowModal('');
+		setShowModal(defaultModal);
 	}
 
 	function removeModal() {
-		setShowModal('');
+		setShowModal(defaultModal);
 		setShow('');
 	}
 	return (
 		<div className='App'>
-			<Nav />
+			<Nav openModal={openForm} />
 			<Form
 				show={show}
 				showModal={showModal}
 				handleSubmit={handleSubmit}
 				removeModal={removeModal}
 			/>
-			<BookCollection openModal={openForm} />
+			<BookCollection />
 		</div>
 	);
 }
