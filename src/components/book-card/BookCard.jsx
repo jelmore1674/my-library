@@ -36,15 +36,13 @@ export default function BookCard({
 					</div>
 					<div className='d-grid gap-2'>
 						<button
-							onClick={(prevState) => updateBook(id)}
-							className='btn btn-success  rounded-pill btn-sm m-1'
-							data--i-d='0'>
+							onClick={() => updateBook(id)}
+							className='btn btn-success  rounde btn-sm m-1'>
 							Finished Book
 						</button>
 						<button
-							data--i-d='0'
-							onClick={(prevState) => removeBook(id)}
-							className='btn btn-danger rounded-pill btn-sm m-1'>
+							onClick={() => removeBook(id)}
+							className='btn btn-danger rounded btn-sm m-1'>
 							Delete from Library
 						</button>
 					</div>

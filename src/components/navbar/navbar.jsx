@@ -1,7 +1,7 @@
 import React from 'react';
 import AddBookButton from '../add-book-button/add-book';
 
-export default function Nav({ openModal }) {
+export default function Nav({ openModal, isSignedIn, onRouteChange }) {
 	return (
 		<nav className='navbar navbar-expand-sm sticky-top navbar-light bg-light'>
 			<div className='container-fluid justify-content-between'>
@@ -21,14 +21,22 @@ export default function Nav({ openModal }) {
 					aria-label='Toggle navigation'>
 					<span className='navbar-toggler-icon'></span>
 				</button>
-				<div
-					className='collapse navbar-collapse justify-content-sm-end'
-					id='navbarTogglerDemo03'>
-					<AddBookButton
-						className='.d-none .d-sm-block .d-md-none'
-						openModal={openModal}
-					/>
-				</div>
+
+				{isSignedIn === true && (
+					<div
+						className='collapse navbar-collapse justify-content-sm-end'
+						id='navbarTogglerDemo03'>
+						<AddBookButton
+							className='.d-none .d-sm-block .d-md-none'
+							openModal={openModal}
+						/>
+						<button
+							onClick={() => onRouteChange('signout')}
+							className='btn btn-danger'>
+							Sign Out
+						</button>
+					</div>
+				)}
 			</div>
 		</nav>
 	);

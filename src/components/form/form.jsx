@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import Input from '../input/input';
 
 export default function Form({ show, showModal, removeModal, handleSubmit }) {
 	const [input, setInput] = useState({
@@ -8,13 +9,20 @@ export default function Form({ show, showModal, removeModal, handleSubmit }) {
 		finished: false,
 	});
 
+	const emptyInput = {
+		title: '',
+		author: '',
+		pages: '',
+		finished: false,
+	};
+
 	const handleChange = (event) => {
 		setInput({
 			...input,
 			[event.target.id]: event.target.value,
 		});
 	};
-	console.log(input);
+	console.log(input.title);
 
 	return (
 		<div
@@ -38,41 +46,44 @@ export default function Form({ show, showModal, removeModal, handleSubmit }) {
 							className='btn-close'
 							data-dismiss='modal'
 							aria-label='Close'
-							onClick={removeModal}></button>
+							onClick={() => {
+								removeModal();
+								setInput(emptyInput);
+							}}></button>
 					</div>
 					<div className='modal-body text-center'>
 						<form>
-							<div className='form-floating mb-3'>
-								<input
-									onChange={handleChange}
-									type='text'
-									className='form-control'
-									id='title'
-									name='title'
-									placeholder='Enter Book Title'
-								/>
-								<label htmlFor='floatingInput'>Title</label>
-							</div>
-							<div className='form-floating mb-3'>
-								<input
-									onChange={handleChange}
-									type='text'
-									className='form-control'
-									id='author'
-									placeholder='Author'
-								/>
-								<label htmlFor='floatingPassword'>Author</label>
-							</div>
-							<div className='form-floating mb-3'>
-								<input
-									onChange={handleChange}
-									type='number'
-									className='form-control'
-									id='pages'
-									placeholder='Pages'
-								/>
-								<label htmlFor='floatingPassword '>Pages</label>
-							</div>
+							<Input
+								type='text'
+								id='title'
+								name='title'
+								label='Title'
+								placeholder='Title'
+								labelFor='title'
+								setValue={input.title}
+								handleChange={handleChange}
+							/>
+							<Input
+								type='text'
+								id='author'
+								name='author'
+								label='Author'
+								placeholder='Author'
+								labelFor='author'
+								setValue={input.author}
+								handleChange={handleChange}
+							/>
+							<Input
+								type='number'
+								id='pages'
+								name='pages'
+								label='Pages'
+								placeholder='Pages'
+								labelFor='pages'
+								setValue={input.pages}
+								handleChange={handleChange}
+							/>
+
 							<div className='form-group'>
 								<label htmlFor='finished'>
 									Have you finished the book?
@@ -90,7 +101,10 @@ export default function Form({ show, showModal, removeModal, handleSubmit }) {
 							</div>
 
 							<button
-								onClick={(e) => handleSubmit(e)}
+								onClick={(e) => {
+									handleSubmit(e);
+									setInput(emptyInput);
+								}}
 								className='btn rounded-pill btn-primary'>
 								Submit
 							</button>
