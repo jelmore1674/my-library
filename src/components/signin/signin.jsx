@@ -2,16 +2,11 @@ import { React, useState } from 'react';
 import Input from '../input/input';
 import { MDBAnimation } from 'mdbreact';
 
-export default function Signin({ onRouteChange }) {
+export default function Signin({ onRouteChange, setUser, user }) {
 	const [input, setInput] = useState({
 		email: '',
 		password: '',
 	});
-
-	const emptyInput = {
-		email: '',
-		password: '',
-	};
 
 	const handleChange = (event) => {
 		setInput({
@@ -27,7 +22,31 @@ export default function Signin({ onRouteChange }) {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		onRouteChange('home');
+		fetch('http://localhost:4500/signin', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				email: input.email,
+				password: input.password,
+			}),
+		})
+			.then((data) => data.json())
+			.then((user) => {
+				if (user.id) {
+					console.log('able to sign in');
+					setUser(user);
+					onRouteChange('home');
+					console.log(user);
+				} else {
+					console.log('screwed up somewhere');
+					console.log(user);
+				}
+			})
+			.catch((err) => {
+				console.log('look over code screwy somewhere');
+			});
 	}
 
 	return (
@@ -59,17 +78,16 @@ export default function Signin({ onRouteChange }) {
 								setValue={input.password}
 								handleChange={handleChange}
 							/>
-
 							<div className='d-flex justify-content-sm-between flex-column'>
-								<button
-									onClick={(e) => handleRegister(e)}
-									className='btn btn btn-secondary btn-lg col-xs-12  '>
-									Register
-								</button>
 								<button
 									onClick={(e) => handleSubmit(e)}
 									className='btn btn-primary btn-lg col-xs-12 '>
 									Sign In
+								</button>
+								<button
+									onClick={(e) => handleRegister(e)}
+									className='btn btn btn-secondary btn-lg col-xs-12  '>
+									Register
 								</button>
 							</div>
 						</form>

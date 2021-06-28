@@ -7,6 +7,8 @@ import Signin from './components/signin/signin';
 import Register from './components/register/register';
 
 function App() {
+	const [library, setLibrary] = useState([]);
+
 	let defaultModal = {
 		display: 'none',
 	};
@@ -20,6 +22,7 @@ function App() {
 	const [show, setShow] = useState('');
 	const [route, setRoute] = useState('signin');
 	const [isSignedIn, setSignin] = useState(true);
+	const [user, setUser] = useState({});
 
 	function openForm() {
 		console.log('clicked');
@@ -27,8 +30,9 @@ function App() {
 		setShow('show');
 	}
 
-	function handleSubmit(event) {
+	function handleSubmit(event, title) {
 		event.preventDefault();
+		console.log(title);
 		setShow('');
 		setShowModal(defaultModal);
 	}
@@ -39,8 +43,10 @@ function App() {
 	}
 
 	function onRouteChange(route) {
+		console.log(user.name);
 		if (route === 'signout') {
 			setRoute('signin');
+			setUser('');
 			setSignin(false);
 		} else if (route === 'home') {
 			setSignin(true);
@@ -57,6 +63,7 @@ function App() {
 				openModal={openForm}
 				isSignedIn={isSignedIn}
 				onRouteChange={onRouteChange}
+				user={user}
 			/>
 
 			{route === 'home' ? (
@@ -66,13 +73,18 @@ function App() {
 						showModal={showModal}
 						handleSubmit={handleSubmit}
 						removeModal={removeModal}
+						setLibrary={setLibrary}
 					/>
-					<BookCollection />
+					<BookCollection
+						library={library}
+						setLibrary={setLibrary}
+						user={user}
+					/>
 				</div>
 			) : route === 'signin' || route === 'signout' ? (
-				<Signin onRouteChange={onRouteChange} />
+				<Signin onRouteChange={onRouteChange} setUser={setUser} />
 			) : (
-				<Register onRouteChange={onRouteChange} />
+				<Register onRouteChange={onRouteChange} setUser={setUser} />
 			)}
 		</div>
 	);

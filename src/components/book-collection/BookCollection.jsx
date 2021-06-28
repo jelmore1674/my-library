@@ -1,93 +1,66 @@
-import { React, useState } from 'react';
+import { React, useEffect } from 'react';
 import BookCard from '../book-card/BookCard';
+import { getLibrary } from './list';
 
-export default function BookCollection() {
-	const myLibrary = [
-		{
-			id: 1,
-			title: 'Smokey and the Bandit',
-			author: 'Burt Reynolds',
-			pages: 33,
-			finished: true,
-		},
-		{
-			id: 2,
-			title: 'Smokey and the Bandit',
-			author: 'Burt Reynolds',
-			pages: 33,
-			finished: false,
-		},
-		{
-			id: 3,
-			title: 'Smokey and the Bandit',
-			author: 'Burt Reynolds',
-			pages: 233,
-			finished: true,
-		},
-		{
-			id: 4,
-			title: 'Smokey and the Bandit',
-			author: 'Burt Reynolds',
-			pages: 33,
-			finished: true,
-		},
-		{
-			id: 5,
-			title: 'Smokey and the Bandit',
-			author: 'Burt Reynolds',
-			pages: 353,
-			finished: true,
-		},
-		{
-			id: 6,
-			title: 'Smokey and the Bandit',
-			author: 'Burt Reynolds',
-			pages: 33,
-			finished: true,
-		},
-		{
-			id: 7,
-			title: 'Smokey and the Bandit',
-			author: 'Burt Reynolds',
-			pages: 33,
-			finished: true,
-		},
-		{
-			id: 8,
-			title: 'Smokey and the Bandit',
-			author: 'Burt Reynolds',
-			pages: 33,
-			finished: true,
-		},
-	];
-
-	const [library, setLibrary] = useState([...myLibrary]);
+export default function BookCollection({ library, setLibrary, user }) {
+	const url = `http://localhost:4500/library-item/${user.id}`;
 
 	function removeBook(id) {
 		var myLibrary = library;
 		for (var i = 0; i < myLibrary.length; i++) {
 			if (myLibrary[i].id === id) {
-				console.log(myLibrary[i]);
+				fetch(`http://localhost:4500/library-item`, {
+					method: 'put',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						id: id,
+						remove: true,
+					}),
+				})
+					.then((data) => data.json())
+					.then((books) => console.log(books));
 				myLibrary.splice(i, 1);
 				console.log('removed book');
-				setLibrary((library) => [...myLibrary]);
-				break;
+				setLibrary(() => [...myLibrary]);
 			}
 		}
 		return library.map(createBookCard);
 	}
 
+	useEffect(() => {
+		let mounted = true;
+		getLibrary(url).then((items) => {
+			if (mounted) {
+				setLibrary(items);
+			}
+		});
+		return () => (mounted = false);
+	});
+
 	function updateBook(id) {
 		var myLibrary = library;
 		for (var i = 0; i < myLibrary.length; i++) {
 			if (myLibrary[i].id === id) {
-				console.log(myLibrary[i]);
+				fetch('http://localhost:4500/library-item', {
+					method: 'put',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						id: id,
+						update: true,
+					}),
+				})
+					.then((data) => data.json())
+					.then((book) => console.log(book));
 				if (myLibrary[i].finished === true) {
 					myLibrary[i].finished = false;
 				} else if (!myLibrary[i].finished) {
 					myLibrary[i].finished = true;
 				}
-				setLibrary((library) => [...myLibrary]);
+				setLibrary(() => [...myLibrary]);
 			}
 		}
 	}
@@ -101,7 +74,6 @@ export default function BookCollection() {
 				author={book.author}
 				pages={book.pages}
 				finished={book.finished}
-				className='col'
 				removeBook={removeBook}
 				updateBook={updateBook}
 			/>

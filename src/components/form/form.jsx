@@ -1,7 +1,13 @@
 import { React, useState } from 'react';
 import Input from '../input/input';
 
-export default function Form({ show, showModal, removeModal, handleSubmit }) {
+export default function Form({
+	show,
+	showModal,
+	removeModal,
+	handleSubmit,
+	setLibrary,
+}) {
 	const [input, setInput] = useState({
 		title: '',
 		author: '',
@@ -22,7 +28,28 @@ export default function Form({ show, showModal, removeModal, handleSubmit }) {
 			[event.target.id]: event.target.value,
 		});
 	};
-	console.log(input.title);
+
+	function addBook(event) {
+		event.preventDefault();
+		fetch('http://localhost:4500/library-item', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				title: input.title,
+				author: input.author,
+				pages: input.pages,
+				finished: input.finished,
+			}),
+		})
+			.then((data) => data.json())
+			.then((books) => {
+				setLibrary(() => books);
+			});
+		handleSubmit(event);
+		setInput(emptyInput);
+	}
 
 	return (
 		<div
@@ -83,7 +110,6 @@ export default function Form({ show, showModal, removeModal, handleSubmit }) {
 								setValue={input.pages}
 								handleChange={handleChange}
 							/>
-
 							<div className='form-group'>
 								<label htmlFor='finished'>
 									Have you finished the book?
@@ -99,12 +125,8 @@ export default function Form({ show, showModal, removeModal, handleSubmit }) {
 									<option value={false}>No</option>
 								</select>
 							</div>
-
 							<button
-								onClick={(e) => {
-									handleSubmit(e);
-									setInput(emptyInput);
-								}}
+								onClick={(e) => addBook(e)}
 								className='btn rounded-pill btn-primary'>
 								Submit
 							</button>

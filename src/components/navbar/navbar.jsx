@@ -1,7 +1,7 @@
 import React from 'react';
 import AddBookButton from '../add-book-button/add-book';
 
-export default function Nav({ openModal, isSignedIn, onRouteChange }) {
+export default function Nav({ openModal, isSignedIn, onRouteChange, user }) {
 	return (
 		<nav className='navbar navbar-expand-sm sticky-top navbar-light bg-light'>
 			<div className='container-fluid justify-content-between'>
@@ -10,6 +10,9 @@ export default function Nav({ openModal, isSignedIn, onRouteChange }) {
 						<i className='fas fa-book-reader'></i>
 					</span>
 					<span className='mb-0 h1'>My Library</span>
+				</div>
+				<div>
+					<h2>{`hello ${user.name}`}</h2>
 				</div>
 				<button
 					className='navbar-toggler'

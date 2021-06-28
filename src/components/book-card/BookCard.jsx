@@ -24,7 +24,12 @@ export default function BookCard({
 					borderRadius: '20%',
 				}}>
 				<div className='container p-3 bg-primary-trans'>
-					<h2 className='card-title' style={{ fontWeight: 'bold' }}>
+					<h2
+						className='card-title h-100'
+						style={{
+							fontWeight: 'bold',
+							minHeight: '72px',
+						}}>
 						{title}
 					</h2>
 					<div className='card-body row'>
