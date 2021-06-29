@@ -2,8 +2,13 @@ import { React, useEffect } from 'react';
 import BookCard from '../book-card/BookCard';
 import { getLibrary } from './list';
 
-export default function BookCollection({ library, setLibrary, user }) {
-	const url = `http://localhost:4500/library-item/${user.id}`;
+export default function BookCollection({
+	library,
+	setLibrary,
+	user,
+	handleSubmit,
+}) {
+	const url = `http://localhost:4500/library-item/${user.userid}`;
 
 	function removeBook(id) {
 		var myLibrary = library;
@@ -37,7 +42,7 @@ export default function BookCollection({ library, setLibrary, user }) {
 			}
 		});
 		return () => (mounted = false);
-	});
+	}, []);
 
 	function updateBook(id) {
 		var myLibrary = library;
@@ -55,10 +60,10 @@ export default function BookCollection({ library, setLibrary, user }) {
 				})
 					.then((data) => data.json())
 					.then((book) => console.log(book));
-				if (myLibrary[i].finished === true) {
-					myLibrary[i].finished = false;
-				} else if (!myLibrary[i].finished) {
-					myLibrary[i].finished = true;
+				if (myLibrary[i].completed === true) {
+					myLibrary[i].completed = false;
+				} else if (!myLibrary[i].completed) {
+					myLibrary[i].completed = true;
 				}
 				setLibrary(() => [...myLibrary]);
 			}
@@ -73,7 +78,7 @@ export default function BookCollection({ library, setLibrary, user }) {
 				title={book.title}
 				author={book.author}
 				pages={book.pages}
-				finished={book.finished}
+				finished={book.completed}
 				removeBook={removeBook}
 				updateBook={updateBook}
 			/>

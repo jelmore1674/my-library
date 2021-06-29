@@ -15,7 +15,7 @@ export default function BookCard({
 			className='m-4'
 			style={{ width: '30vh' }}
 			type='zoomIn'
-			duration='2s'>
+			duration='1.5s'>
 			<div
 				className='card overflow-hidden'
 				style={{
@@ -36,7 +36,7 @@ export default function BookCard({
 						<p className='card-text text-white'>{`Author: ${author}`}</p>
 						<p className='card-text text-white'>{`${pages} pages`}</p>
 						<p className='card-text text-white'>
-							{finished === true ? 'Finished' : 'Not Read'}
+							{finished == true ? 'Finished' : 'Not Read'}
 						</p>
 					</div>
 					<div className='d-grid gap-2'>

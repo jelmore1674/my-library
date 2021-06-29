@@ -34,14 +34,14 @@ export default function Signin({ onRouteChange, setUser, user }) {
 		})
 			.then((data) => data.json())
 			.then((user) => {
-				if (user.id) {
+				if (user[0].userid) {
 					console.log('able to sign in');
-					setUser(user);
+					setUser(user[0]);
 					onRouteChange('home');
-					console.log(user);
+					console.log(user[0]);
 				} else {
 					console.log('screwed up somewhere');
-					console.log(user);
+					console.log(user[0]);
 				}
 			})
 			.catch((err) => {
@@ -50,7 +50,7 @@ export default function Signin({ onRouteChange, setUser, user }) {
 	}
 
 	return (
-		<MDBAnimation type='slideInDown' duration='2s'>
+		<MDBAnimation type='slideInDown' duration='1.4s'>
 			<div className='mt-5 d-flex justify-content-center '>
 				<div className='container-fluid col-8 offset-2 bg-primary-trans  overflow-hidden  shadow-lg p-3 mb-5 rounded'>
 					<div className='w-100'>

@@ -41,7 +41,7 @@ export default function Register({ onRouteChange, setUser }) {
 	}
 
 	return (
-		<MDBAnimation type='slideInLeft' duration='2s'>
+		<MDBAnimation type='slideInLeft' duration='1.2s'>
 			<div className='mt-5 d-flex justify-content-center '>
 				<div className='container-fluid col-8 offset-2 bg-primary-trans  overflow-hidden  shadow-lg p-3 mb-5 rounded'>
 					<form className='w-100'>

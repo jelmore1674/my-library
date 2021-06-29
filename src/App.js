@@ -74,11 +74,13 @@ function App() {
 						handleSubmit={handleSubmit}
 						removeModal={removeModal}
 						setLibrary={setLibrary}
+						user={user}
 					/>
 					<BookCollection
 						library={library}
 						setLibrary={setLibrary}
 						user={user}
+						handleSubmit={handleSubmit}
 					/>
 				</div>
 			) : route === 'signin' || route === 'signout' ? (

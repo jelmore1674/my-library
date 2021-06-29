@@ -7,19 +7,20 @@ export default function Form({
 	removeModal,
 	handleSubmit,
 	setLibrary,
+	user,
 }) {
 	const [input, setInput] = useState({
 		title: '',
 		author: '',
 		pages: '',
-		finished: false,
+		completed: false,
 	});
 
 	const emptyInput = {
 		title: '',
 		author: '',
 		pages: '',
-		finished: false,
+		completed: false,
 	};
 
 	const handleChange = (event) => {
@@ -37,10 +38,12 @@ export default function Form({
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
+				userid: user.userid,
 				title: input.title,
 				author: input.author,
 				pages: input.pages,
-				finished: input.finished,
+				completed: input.completed,
+				email: user.email,
 			}),
 		})
 			.then((data) => data.json())
