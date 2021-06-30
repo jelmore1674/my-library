@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import Input from '../input/input';
 import { MDBAnimation } from 'mdbreact';
 
-export default function Register({ onRouteChange, setUser }) {
+export default function Register({ onRouteChange, setUser, user }) {
 	const [input, setInput] = useState({
 		email: '',
 		password: '',
@@ -30,14 +30,14 @@ export default function Register({ onRouteChange, setUser }) {
 			}),
 		})
 			.then((data) => data.json())
-			.then((users) => {
-				for (let i = 0; i < users.length; i++) {
-					if (users[i].email === input.email) {
-						setUser(() => users[i]);
-					}
-				}
+			.then((newUser) => {
+				const registeredUser = { ...newUser };
+				setUser({ ...registeredUser });
 			});
-		onRouteChange('home');
+
+		if (user.userid) {
+			onRouteChange('home');
+		}
 	}
 
 	return (

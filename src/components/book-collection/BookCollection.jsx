@@ -2,12 +2,7 @@ import { React, useEffect } from 'react';
 import BookCard from '../book-card/BookCard';
 import { getLibrary } from './list';
 
-export default function BookCollection({
-	library,
-	setLibrary,
-	user,
-	handleSubmit,
-}) {
+export default function BookCollection({ library, setLibrary, user, show }) {
 	const url = `http://localhost:4500/library-item/${user.userid}`;
 
 	function removeBook(id) {
@@ -27,7 +22,6 @@ export default function BookCollection({
 					.then((data) => data.json())
 					.then((books) => console.log(books));
 				myLibrary.splice(i, 1);
-				console.log('removed book');
 				setLibrary(() => [...myLibrary]);
 			}
 		}
@@ -36,13 +30,14 @@ export default function BookCollection({
 
 	useEffect(() => {
 		let mounted = true;
+		console.log(user);
 		getLibrary(url).then((items) => {
 			if (mounted) {
 				setLibrary(items);
 			}
 		});
 		return () => (mounted = false);
-	}, []);
+	}, [show]);
 
 	function updateBook(id) {
 		var myLibrary = library;
@@ -60,11 +55,26 @@ export default function BookCollection({
 				})
 					.then((data) => data.json())
 					.then((book) => console.log(book));
+				console.log(myLibrary[i].completed);
 				if (myLibrary[i].completed === true) {
 					myLibrary[i].completed = false;
 				} else if (!myLibrary[i].completed) {
 					myLibrary[i].completed = true;
 				}
+				setLibrary(() => [...myLibrary]);
+			} else if (myLibrary[i].id === id) {
+				fetch('http://localhost:4500/library-item', {
+					method: 'put',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						id: id,
+						remove: true,
+					}),
+				})
+					.then((data) => data.json())
+					.then((book) => console.log(book));
 				setLibrary(() => [...myLibrary]);
 			}
 		}

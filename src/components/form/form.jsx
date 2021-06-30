@@ -122,9 +122,7 @@ export default function Form({
 									className='form-select form-select-lg mb-3'
 									id='finished'
 									aria-label='.form-select-lg form'>
-									<option value={true} selected>
-										Yes
-									</option>
+									<option value={true}>Yes</option>
 									<option value={false}>No</option>
 								</select>
 							</div>

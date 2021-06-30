@@ -1,7 +1,7 @@
 import React from 'react';
 import AddBookButton from '../add-book-button/add-book';
 
-export default function Nav({ openModal, isSignedIn, onRouteChange, user }) {
+export default function Nav({ openModal, isSignedIn, onRouteChange }) {
 	return (
 		<nav className='navbar navbar-expand-sm sticky-top navbar-light bg-light'>
 			<div className='container-fluid justify-content-between'>
@@ -10,9 +10,6 @@ export default function Nav({ openModal, isSignedIn, onRouteChange, user }) {
 						<i className='fas fa-book-reader'></i>
 					</span>
 					<span className='mb-0 h1'>My Library</span>
-				</div>
-				<div>
-					<h2>{`hello ${user.name}`}</h2>
 				</div>
 				<button
 					className='navbar-toggler'
@@ -25,9 +22,9 @@ export default function Nav({ openModal, isSignedIn, onRouteChange, user }) {
 					<span className='navbar-toggler-icon'></span>
 				</button>
 
-				{isSignedIn === true && (
+				{isSignedIn === true ? (
 					<div
-						className='collapse navbar-collapse justify-content-sm-end'
+						className='collapse navbar-collapse justify-content-sm-end d-grid'
 						id='navbarTogglerDemo03'>
 						<AddBookButton
 							className='.d-none .d-sm-block .d-md-none'
@@ -35,10 +32,12 @@ export default function Nav({ openModal, isSignedIn, onRouteChange, user }) {
 						/>
 						<button
 							onClick={() => onRouteChange('signout')}
-							className='btn btn-danger'>
+							className='btn btn-danger '>
 							Sign Out
 						</button>
 					</div>
+				) : (
+					<div></div>
 				)}
 			</div>
 		</nav>

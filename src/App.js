@@ -21,18 +21,16 @@ function App() {
 	const [showModal, setShowModal] = useState(defaultModal);
 	const [show, setShow] = useState('');
 	const [route, setRoute] = useState('signin');
-	const [isSignedIn, setSignin] = useState(true);
-	const [user, setUser] = useState({});
+	const [isSignedIn, setSignin] = useState(false);
+	const [user, setUser] = useState('');
 
 	function openForm() {
-		console.log('clicked');
 		setShowModal(modalStyle);
 		setShow('show');
 	}
 
 	function handleSubmit(event, title) {
 		event.preventDefault();
-		console.log(title);
 		setShow('');
 		setShowModal(defaultModal);
 	}
@@ -43,7 +41,6 @@ function App() {
 	}
 
 	function onRouteChange(route) {
-		console.log(user.name);
 		if (route === 'signout') {
 			setRoute('signin');
 			setUser('');
@@ -54,7 +51,6 @@ function App() {
 			setRoute('signin');
 		}
 		setRoute(route);
-		console.log(route);
 	}
 
 	return (
@@ -80,13 +76,17 @@ function App() {
 						library={library}
 						setLibrary={setLibrary}
 						user={user}
-						handleSubmit={handleSubmit}
+						show={show}
 					/>
 				</div>
 			) : route === 'signin' || route === 'signout' ? (
 				<Signin onRouteChange={onRouteChange} setUser={setUser} />
 			) : (
-				<Register onRouteChange={onRouteChange} setUser={setUser} />
+				<Register
+					onRouteChange={onRouteChange}
+					setUser={setUser}
+					user={user}
+				/>
 			)}
 		</div>
 	);

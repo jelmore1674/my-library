@@ -36,7 +36,7 @@ export default function BookCard({
 						<p className='card-text text-white'>{`Author: ${author}`}</p>
 						<p className='card-text text-white'>{`${pages} pages`}</p>
 						<p className='card-text text-white'>
-							{finished == true ? 'Finished' : 'Not Read'}
+							{finished === true ? 'Finished' : 'Not Read'}
 						</p>
 					</div>
 					<div className='d-grid gap-2'>

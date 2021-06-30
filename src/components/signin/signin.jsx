@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import Input from '../input/input';
 import { MDBAnimation } from 'mdbreact';
 
-export default function Signin({ onRouteChange, setUser, user }) {
+export default function Signin({ onRouteChange, setUser }) {
 	const [input, setInput] = useState({
 		email: '',
 		password: '',
@@ -35,13 +35,8 @@ export default function Signin({ onRouteChange, setUser, user }) {
 			.then((data) => data.json())
 			.then((user) => {
 				if (user[0].userid) {
-					console.log('able to sign in');
 					setUser(user[0]);
 					onRouteChange('home');
-					console.log(user[0]);
-				} else {
-					console.log('screwed up somewhere');
-					console.log(user[0]);
 				}
 			})
 			.catch((err) => {
