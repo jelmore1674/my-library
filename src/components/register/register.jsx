@@ -18,6 +18,7 @@ export default function Register({ onRouteChange, setUser, user }) {
 
 	function handleSubmit(event) {
 		event.preventDefault();
+
 		fetch('http://localhost:4500/register', {
 			method: 'POST',
 			headers: {
@@ -31,13 +32,11 @@ export default function Register({ onRouteChange, setUser, user }) {
 		})
 			.then((data) => data.json())
 			.then((newUser) => {
-				const registeredUser = { ...newUser };
-				setUser({ ...registeredUser });
+				setUser(newUser);
+				if (newUser.userid) {
+					onRouteChange('home');
+				}
 			});
-
-		if (user.userid) {
-			onRouteChange('home');
-		}
 	}
 
 	return (

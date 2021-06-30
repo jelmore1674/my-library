@@ -18,9 +18,7 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 						id: id,
 						remove: true,
 					}),
-				})
-					.then((data) => data.json())
-					.then((books) => console.log(books));
+				}).then((data) => data.json());
 				myLibrary.splice(i, 1);
 				setLibrary(() => [...myLibrary]);
 			}
@@ -30,10 +28,9 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 
 	useEffect(() => {
 		let mounted = true;
-		console.log(user);
 		getLibrary(url).then((items) => {
 			if (mounted) {
-				setLibrary(items);
+				setLibrary(() => items);
 			}
 		});
 		return () => (mounted = false);
@@ -43,23 +40,32 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 		var myLibrary = library;
 		for (var i = 0; i < myLibrary.length; i++) {
 			if (myLibrary[i].id === id) {
-				fetch('http://localhost:4500/library-item', {
-					method: 'put',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						id: id,
-						update: true,
-					}),
-				})
-					.then((data) => data.json())
-					.then((book) => console.log(book));
-				console.log(myLibrary[i].completed);
 				if (myLibrary[i].completed === true) {
 					myLibrary[i].completed = false;
+					fetch('http://localhost:4500/library-item', {
+						method: 'put',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							id: id,
+							update: true,
+							completed: false,
+						}),
+					}).then((data) => data.json());
 				} else if (!myLibrary[i].completed) {
 					myLibrary[i].completed = true;
+					fetch('http://localhost:4500/library-item', {
+						method: 'put',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							id: id,
+							update: true,
+							completed: true,
+						}),
+					}).then((data) => data.json());
 				}
 				setLibrary(() => [...myLibrary]);
 			} else if (myLibrary[i].id === id) {
@@ -72,9 +78,7 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 						id: id,
 						remove: true,
 					}),
-				})
-					.then((data) => data.json())
-					.then((book) => console.log(book));
+				}).then((data) => data.json());
 				setLibrary(() => [...myLibrary]);
 			}
 		}
