@@ -1,7 +1,30 @@
 import React from 'react';
 import AddBookButton from '../add-book-button/add-book';
 
-export default function Nav({ openModal, isSignedIn, onRouteChange }) {
+export default function Nav({ openModal, isSignedIn, onRouteChange, setUser }) {
+	function handleDemo() {
+		fetch('https://damp-depths-04548.herokuapp.com/signin', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				email: 'demo@demo.com',
+				password: 'demo',
+			}),
+		})
+			.then((data) => data.json())
+			.then((user) => {
+				if (user[0].userid) {
+					setUser(user[0]);
+					onRouteChange('home');
+				}
+			})
+			.catch((err) => {
+				console.log('look over code screwy somewhere');
+			});
+	}
+
 	return (
 		<nav className='navbar navbar-expand-sm sticky-top navbar-light bg-light'>
 			<div className='container-fluid justify-content-between'>
@@ -37,7 +60,11 @@ export default function Nav({ openModal, isSignedIn, onRouteChange }) {
 						</button>
 					</div>
 				) : (
-					<div></div>
+					<div>
+						<button onClick={handleDemo} className='btn btn-info '>
+							Demo
+						</button>
+					</div>
 				)}
 			</div>
 		</nav>

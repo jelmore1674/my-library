@@ -59,6 +59,7 @@ function App() {
 				openModal={openForm}
 				isSignedIn={isSignedIn}
 				onRouteChange={onRouteChange}
+				setUser={setUser}
 				user={user}
 			/>
 

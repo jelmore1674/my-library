@@ -19,7 +19,7 @@ export default function Register({ onRouteChange, setUser, user }) {
 	function handleSubmit(event) {
 		event.preventDefault();
 
-		fetch('http://localhost:4500/register', {
+		fetch('https://damp-depths-04548.herokuapp.com/register', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

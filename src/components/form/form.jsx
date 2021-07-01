@@ -32,7 +32,7 @@ export default function Form({
 
 	function addBook(event) {
 		event.preventDefault();
-		fetch('http://localhost:4500/library-item', {
+		fetch('https://damp-depths-04548.herokuapp.com/library-item', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

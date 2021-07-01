@@ -3,13 +3,13 @@ import BookCard from '../book-card/BookCard';
 import { getLibrary } from './list';
 
 export default function BookCollection({ library, setLibrary, user, show }) {
-	const url = `http://localhost:4500/library-item/${user.userid}`;
+	const url = `https://damp-depths-04548.herokuapp.com/library-item/${user.userid}`;
 
 	function removeBook(id) {
 		var myLibrary = library;
 		for (var i = 0; i < myLibrary.length; i++) {
 			if (myLibrary[i].id === id) {
-				fetch(`http://localhost:4500/library-item`, {
+				fetch(`https://damp-depths-04548.herokuapp.com/library-item`, {
 					method: 'put',
 					headers: {
 						'Content-Type': 'application/json',
@@ -42,34 +42,40 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 			if (myLibrary[i].id === id) {
 				if (myLibrary[i].completed === true) {
 					myLibrary[i].completed = false;
-					fetch('http://localhost:4500/library-item', {
-						method: 'put',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							id: id,
-							update: true,
-							completed: false,
-						}),
-					}).then((data) => data.json());
+					fetch(
+						'https://damp-depths-04548.herokuapp.com/library-item',
+						{
+							method: 'put',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({
+								id: id,
+								update: true,
+								completed: false,
+							}),
+						}
+					).then((data) => data.json());
 				} else if (!myLibrary[i].completed) {
 					myLibrary[i].completed = true;
-					fetch('http://localhost:4500/library-item', {
-						method: 'put',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							id: id,
-							update: true,
-							completed: true,
-						}),
-					}).then((data) => data.json());
+					fetch(
+						'https://damp-depths-04548.herokuapp.com/library-item',
+						{
+							method: 'put',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({
+								id: id,
+								update: true,
+								completed: true,
+							}),
+						}
+					).then((data) => data.json());
 				}
 				setLibrary(() => [...myLibrary]);
 			} else if (myLibrary[i].id === id) {
-				fetch('http://localhost:4500/library-item', {
+				fetch('https://damp-depths-04548.herokuapp.com/library-item', {
 					method: 'put',
 					headers: {
 						'Content-Type': 'application/json',
