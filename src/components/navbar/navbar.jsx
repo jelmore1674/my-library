@@ -47,17 +47,19 @@ export default function Nav({ openModal, isSignedIn, onRouteChange, setUser }) {
 
 				{isSignedIn === true ? (
 					<div
-						className='collapse navbar-collapse justify-content-sm-end d-grid'
+						className='collapse navbar-collapse justify-content-sm-end'
 						id='navbarTogglerDemo03'>
 						<AddBookButton
 							className='.d-none .d-sm-block .d-md-none'
 							openModal={openModal}
 						/>
-						<button
-							onClick={() => onRouteChange('signout')}
-							className='btn btn-danger '>
-							Sign Out
-						</button>
+						<div className='d-grid'>
+							<button
+								onClick={() => onRouteChange('signout')}
+								className='btn btn-danger '>
+								Sign Out
+							</button>
+						</div>
 					</div>
 				) : (
 					<div>
