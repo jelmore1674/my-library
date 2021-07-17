@@ -29,9 +29,12 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 	useEffect(() => {
 		let mounted = true;
 		getLibrary(url).then((items) => {
-			setLibrary(() => items);
+			if (mounted) {
+				setLibrary(() => items);
+			}
 		});
-	}, [show]);
+		return () => (mounted = false);
+	});
 
 	function updateBook(id) {
 		var myLibrary = library;

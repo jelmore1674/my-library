@@ -31,13 +31,13 @@ function App() {
 
 	function handleSubmit(event, title) {
 		event.preventDefault();
-		setShow('hides');
+		setShow('');
 		setShowModal(defaultModal);
 	}
 
 	function removeModal() {
 		setShowModal(defaultModal);
-		setShow('hides');
+		setShow('');
 	}
 
 	function onRouteChange(route) {
