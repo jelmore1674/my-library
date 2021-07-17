@@ -31,15 +31,13 @@ function App() {
 
 	function handleSubmit(event, title) {
 		event.preventDefault();
-		setTimeout(() => {
-			setShow('');
-			setShowModal(defaultModal);
-		}, 750);
+		setShow('hides');
+		setShowModal(defaultModal);
 	}
 
 	function removeModal() {
 		setShowModal(defaultModal);
-		setShow('');
+		setShow('hides');
 	}
 
 	function onRouteChange(route) {
