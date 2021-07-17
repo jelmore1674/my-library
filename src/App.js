@@ -31,8 +31,10 @@ function App() {
 
 	function handleSubmit(event, title) {
 		event.preventDefault();
-		setShow('');
-		setShowModal(defaultModal);
+		setTimeout(() => {
+			setShow('');
+			setShowModal(defaultModal);
+		}, 750);
 	}
 
 	function removeModal() {
