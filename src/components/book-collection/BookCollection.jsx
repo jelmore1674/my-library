@@ -1,8 +1,15 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import BookCard from '../book-card/BookCard';
 import { getLibrary } from './list';
 
-export default function BookCollection({ library, setLibrary, user, show }) {
+export default function BookCollection({
+	library,
+	setLibrary,
+	user,
+	show,
+	showModal,
+}) {
+	const [changedLibrary, setChangedLibrary] = useState(false);
 	const url = `https://damp-depths-04548.herokuapp.com/library-item/${user.userid}`;
 
 	function removeBook(id) {
@@ -19,22 +26,21 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 						remove: true,
 					}),
 				}).then((data) => data.json());
-				myLibrary.splice(i, 1);
-				setLibrary(() => [...myLibrary]);
+				setChangedLibrary(true);
+				setChangedLibrary(false);
 			}
 		}
 		return library.map(createBookCard);
 	}
 
 	useEffect(() => {
-		let mounted = true;
 		getLibrary(url).then((items) => {
-			if (mounted) {
-				setLibrary(() => items);
+			if (library.length !== items.length) {
+				setLibrary(items);
 			}
 		});
-		return () => (mounted = false);
-	});
+		// console.log('updated');
+	}, [setChangedLibrary]);
 
 	function updateBook(id) {
 		var myLibrary = library;
@@ -73,7 +79,8 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 						}
 					).then((data) => data.json());
 				}
-				setLibrary(() => [...myLibrary]);
+				setChangedLibrary(true);
+				setChangedLibrary(false);
 			} else if (myLibrary[i].id === id) {
 				fetch('https://damp-depths-04548.herokuapp.com/library-item', {
 					method: 'put',
@@ -85,7 +92,8 @@ export default function BookCollection({ library, setLibrary, user, show }) {
 						remove: true,
 					}),
 				}).then((data) => data.json());
-				setLibrary(() => [...myLibrary]);
+				setChangedLibrary(true);
+				setChangedLibrary(false);
 			}
 		}
 	}

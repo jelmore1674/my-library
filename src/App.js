@@ -78,6 +78,7 @@ function App() {
 						setLibrary={setLibrary}
 						user={user}
 						show={show}
+						showModal={showModal}
 					/>
 				</div>
 			) : route === 'signin' || route === 'signout' ? (

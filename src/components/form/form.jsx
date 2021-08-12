@@ -48,7 +48,7 @@ export default function Form({
 		})
 			.then((data) => data.json())
 			.then((books) => {
-				setLibrary(() => books);
+				setLibrary(books);
 			});
 		handleSubmit(event);
 		setInput(emptyInput);
